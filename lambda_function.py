@@ -41,7 +41,7 @@ def main(*args, **kwargs):
 
         # Make sure each found sub reddit is publicly available
         found_subreddits = search_subreddits(access_token, query=term)
-        public_subreddits = filter(lambda sub: sub["data"]["subreddit_type"] == "public", found_subreddits)
+        public_subreddits = list(filter(lambda sub: sub["data"]["subreddit_type"] == "public", found_subreddits))
 
         # Sort each sub into nsfw and sfw
         nsfw_found_endpoints = [sub["data"]["url"] for sub in public_subreddits if sub["data"]["over18"]]
