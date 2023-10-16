@@ -39,9 +39,16 @@ def main(*args, **kwargs):
         if time.time() > timeout:
             break
 
+        # Filter out all subreddits that don't meet certain criteria
+        def _filter_conditions(sub):
+            return all([
+                sub["data"]["subreddit_type"] == "public",
+                sub["data"]["subscribers"] or 0 >= 10000
+            ])
+
         # Make sure each found sub reddit is publicly available
         found_subreddits = search_subreddits(access_token, query=term)
-        public_subreddits = list(filter(lambda sub: sub["data"]["subreddit_type"] == "public", found_subreddits))
+        public_subreddits = list(filter(_filter_conditions, found_subreddits))
 
         # Sort each sub into nsfw and sfw
         nsfw_found_endpoints = [sub["data"]["url"] for sub in public_subreddits if sub["data"]["over18"]]
