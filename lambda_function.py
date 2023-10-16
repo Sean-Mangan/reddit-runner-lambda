@@ -20,7 +20,7 @@ def main(*args, **kwargs):
     """
 
     # These are the most up to date endpoints and search terms available
-    search_terms = get_json(TERM_FILE)["terms"] + get_random_terms(100)
+    search_terms = get_json(TERM_FILE)["terms"] + get_random_terms(300)
 
     # This token is valid for 24h
     access_token = get_reddit_auth()
